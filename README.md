@@ -1,2 +1,2 @@
 # RUSnacc-2020
-RUHacks
+**Harm Reduction Web app for RUHacks 2020**
