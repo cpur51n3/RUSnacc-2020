@@ -1,0 +1,10 @@
+{
+  "page_strings":{
+      "dcp_assignment_string": "From here you can choose what type of calculations you want to send off to other worker nodes",
+      "dcp_worker_string": "From here you can choose how you set up worker nodes to gain credits on the network",
+      "assign_action": "DCP: Start a new job to be distributed",
+      "assign_action_desc": "Select the following parameters to be added to this new job: ",
+      "worker_action": "DCP: Start new worker node(s) to be used by others",
+      "worker_action_desc": "Giving back to the community by creating the following parameters: "
+  }
+}

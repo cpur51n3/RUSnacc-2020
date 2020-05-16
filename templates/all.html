@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+{% extends "base.html" %}
+{% block title %}Index Page{% endblock%}
+
+{% block content %}
+<!-- Header -->
+<center>
+  <head>
+  <link rel="stylesheet" type="text/css" href="static/main.css" src="{{url_for('static', filename='main.css')}}">
+  </head>
+  <div class="header">
+    <h2>Please input metrics for projection calculations</h2>
+  </div>
+  <article class="thumb">
+    <a href="static/01.jpg" class="image"><img src="{{url_for('static', filename='01.jpg')}}" alt="" /></a>
+    <h2>Test</h2>
+  </article>
+  <body>
+    <img src="{{ url_for('static', filename='sample.png') }}" alt="User Image">
+  </body>
+</center>
+{% endblock %}

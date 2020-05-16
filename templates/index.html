@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock%}
+
+{% block content %}
+
+<head>
+<link rel="stylesheet" type="text/css" href="static/main.css" src="{{url_for('static', filename='main.css')}}">
+</head>
+				<body>
+					<center>
+				<!-- Header -->
+					<header id="header">
+						<h1><a><strong>{{content}}</strong></a></h1>
+					</header>
+
+				<!-- Main -->
+						<article class="thumb">
+							<a href="static/01.jpg" class="image"><img src="{{url_for('static', filename='01.jpg')}}" alt="" /></a>
+							<h2>Distributed Computing Protocal: Start a new job for calculate optimal projection</h2>
+						</article>
+						<article class="thumb">
+							<a href="static/02.jpg" class="image"><img src="{{url_for('static', filename='02.jpg')}}" alt="" /></a>
+							<h2>Distributed Computing Protocol: Start node(s) for other people to distribute computing to</h2>
+							<p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+						</article>
+						<article class="thumb">
+							<a href="static/03.jpg" class="image"><img src="{{url_for('static', filename='03.jpg')}}" alt="" /></a>
+							<h2>Sed consequat phasellus</h2>
+							<p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
+						</article>
+				</center>
+	</body>
+{% endblock %}
