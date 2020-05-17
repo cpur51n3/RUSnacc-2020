@@ -84,11 +84,11 @@ def add_header(response):
 #                            which_action=page_strings['worker_action'],
 #                            which_action_desc=page_strings['worker_action_desc'])
 
-def generate_image():
+def generate_image(form1=[0,1,2,3,4,5],form2=[1,2,3,4,5,6]):
     df = pd.DataFrame({
-                        'a': [20, 18, 11, 615, 113],
-                        'b': [4, 25, 11, 602, 123]
-                        }, index=[1990, 1997, 2003, 2009, 2014])
+                        'a': form1,
+                        'b': form2,
+                        }, index=[1990, 1997, 2003, 2009, 2014, 2019])
     lines = df.plot.line()
     fig = lines.get_figure()
     fig.savefig(full_filename)
