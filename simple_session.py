@@ -5,6 +5,7 @@ import json
 import pandas as pd
 import matplotlib
 
+
 # Path for test image
 photo_folder = os.path.join('static')
 full_filename = os.path.join(photo_folder, 'sample.png')
@@ -34,6 +35,13 @@ def local():
     remote_ip = request.remote_addr
     return render_template("local.html",
                            location=f"{remote_ip}")
+    if nasal== '7':
+        S=7
+    elif mask=='1':
+        S=1
+    else:
+        S=2
+    social_distance = S
 
 @app.route("/all", methods=["GET","POST"])
 def all():
@@ -42,8 +50,8 @@ def all():
         social_distance = []
         for i in range(28):
             social_distance.append(i)
-        overdose_impact = calculate_medical_impact(1,200,18,0,0,'overdose')
-        covid_impact = calculate_medical_impact(1,200,18,0,0,'covid')
+        overdose_impact = calculate_medical_impact(1,200,18, 2.4,'overdose')
+        covid_impact = calculate_medical_impact(1,200,18, 2.4,'covid')
         generate_image(covid_impact,overdose_impact,social_distance)
 
     if request.method == 'POST':
@@ -57,8 +65,8 @@ def all():
             num1[2] = request.form['add_num3']
             num1[3] = request.form['add_num4']
             num1[4] = request.form['add_num5']
-            social_distance_menu = request.form['drop_down1']
-            print(social_distance_menu)
+            #social_distance_menu = request.form['drop_down1']
+            #print(social_distance_menu)
             num1 = [float(i) for i in num1]
             if num1[0] > 100 or num1[0] < 1:
                 num1[0] = 1
@@ -107,22 +115,16 @@ def generate_image(covid_impact, overdose_impact, social_distance):
     fig.savefig(full_filename)
     return full_filename
 
-def calculate_medical_impact(locations, avg_space, hours, masks, nasal, covid_or_overdose, norm=500):
+def calculate_medical_impact(locations, avg_space, hours, social_distance, covid_or_overdose, norm=500):
     impact_projection = []
-     
-    if nasal == '7':
-        S=7
-    elif masks == '1':
-        S=1
-    else: 
-        S=2
-   # S=social_distance
+    
+    A = social_distance
     space = locations*avg_space
-    for A in range(1,29):
-        infected =0.001*60*(S-A)
+    for S in range(1,29):
+        infected =0.001*60*(A-S)
         critical_covid = 0.25*infected
         mild_covid = 0.75*infected
-        overdose = norm - (hours/3)*(space/A)
+        overdose = norm - (hours/3)*(space/S)
         overdose = overdose*0.3
         if covid_or_overdose == 'overdose':
             impact_projection.append(int(2*overdose))

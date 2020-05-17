@@ -4,6 +4,56 @@
 
 {% block content %}
 <!-- Header -->
+<head>
+  <link rel="stylesheet" type="text/css" href="static/main.css" src="{{url_for('static', filename='main.css')}}">
+  </head>	
+  <STYLE type="text/css">
+  <HTML>	
+  <body>
+      h1 {
+      color: black;
+      font-size: 10px;
+        }
+  
+      T1{
+          position:relative;
+          left: 25px;
+          top: 400px;
+          
+          margin: 20px 20px 20px 20px;
+          padding: 3px 3px 3px 3px;
+          vertical-align: middle;
+        }	
+      T2 { 
+          color: black;                /* text color is white */ 
+                    /* Content, padding will be blue */
+          margin: 12px 12px 12px 12px;
+          padding: 12px 0px 12px 12px; /* Note 0px padding right */
+          list-style: none             /* no glyphs before a list item */
+                         /* No borders set */
+        }
+        T2.lower {
+          top: = 1000;
+
+        }
+      </STYLE>
+      </HEAD>
+      <T1>
+        <article class="thumb"></article>
+        <T2>
+          <p>This graph shows the impact on the hospital system that would be had by</p>
+          <p>enforcing a particular distance between patrons (thus limiting the number of patrons)</p>
+        </T2>
+      </T1>
+      <T1>
+        <article class="thumb"></article>
+        <T2>
+            <T2.lower>
+              <p>Fill in the parameters below to find the optimal configuration for your SCS</p>
+              
+          </T2.lower>
+        </T2>
+      </T1>
 <center>
   <head>
   <link rel="stylesheet" type="text/css" href="static/main.css" src="{{url_for('static', filename='main.css')}}">
@@ -24,18 +74,13 @@
             <label for="nasal"> This SCS allows nasal consumption</label><br>
             <input type="checkbox" id="masks" name="masks" value="1">
             <label for="masks"> Masks are available at this location</label><br>
-            <label for="social_distance">Choose how restrictive your clinic is: </label>
-            <select id="drop_down1" name="drop_down1">
-            <option value=1>No Social Distancing</option>
-            <option value=2>Minimal Social Distancing</option>
-            <option value=7>Proper Social Distancing</option>
-            </select>
+            
             <p>Enter the number of facilities, average facility size, and hours of operation</p>
             <input type = "number" step="any" id = "add_num1" name = "add_num1" placeholder='Locations available' required><label> </label><br>
             <input type = "number" step="any" id = "add_num2" name = "add_num2" placeholder='Size of Facilities' required><label>  </label><br>
             <input type = "number" step="any" id = "add_num3" name = "add_num3" placeholder=' Hours Open' required><label> </label><br>
-            <p>The actual social distancing being enforced, in meters </p>
-            <input type = "number" step="any" id = "add_num4" name = "add_num4" placeholder='Distance in meters' required><label>  </label><br>
+            <p>The actual social distancing protocol being enforced, 1 being not following the rules at all, 7 being really strict </p>
+            <input type = "number" step="any" id = "add_num4" name = "add_num4" placeholder='Between 1 - 7' required><label>  </label><br>
             <input type = "number" step="any" id = "add_num5" name = "add_num5" placeholder='Normal Traffic' required><label>  </label><br>
             <input type = "submit" value = "Calculate impact" name = "submit" ><br>
         </form>
