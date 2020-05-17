@@ -20,6 +20,10 @@
     <div>
 
         <form action="{{ url_for('all')}}" method="POST">
+            <input type="checkbox" id="nasal" name="nasal" value="7">
+            <label for="nasal"> This SCS allows nasal consumption</label><br>
+            <input type="checkbox" id="masks" name="masks" value="1">
+            <label for="masks"> Masks are available at this location</label><br>
             <label for="social_distance">Choose how restrictive your clinic is: </label>
             <select id="drop_down1" name="drop_down1">
             <option value=1>No Social Distancing</option>
@@ -30,8 +34,8 @@
             <input type = "number" step="any" id = "add_num1" name = "add_num1" placeholder='Locations available' required><label> </label><br>
             <input type = "number" step="any" id = "add_num2" name = "add_num2" placeholder='Size of Facilities' required><label>  </label><br>
             <input type = "number" step="any" id = "add_num3" name = "add_num3" placeholder=' Hours Open' required><label> </label><br>
-            <p>The actual social distancing protocol being enforced, 1 being not following the rules at all, 7 being really strict </p>
-            <input type = "number" step="any" id = "add_num4" name = "add_num4" placeholder='Between 1 - 7' required><label>  </label><br>
+            <p>The actual social distancing being enforced, in meters </p>
+            <input type = "number" step="any" id = "add_num4" name = "add_num4" placeholder='Distance in meters' required><label>  </label><br>
             <input type = "number" step="any" id = "add_num5" name = "add_num5" placeholder='Normal Traffic' required><label>  </label><br>
             <input type = "submit" value = "Calculate impact" name = "submit" ><br>
         </form>

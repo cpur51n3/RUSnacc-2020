@@ -42,8 +42,8 @@ def all():
         social_distance = []
         for i in range(28):
             social_distance.append(i)
-        overdose_impact = calculate_medical_impact(1,200,18, 2.4,'overdose')
-        covid_impact = calculate_medical_impact(1,200,18, 2.4,'covid')
+        overdose_impact = calculate_medical_impact(1,200,18,0,0,'overdose')
+        covid_impact = calculate_medical_impact(1,200,18,0,0,'covid')
         generate_image(covid_impact,overdose_impact,social_distance)
 
     if request.method == 'POST':
@@ -107,15 +107,22 @@ def generate_image(covid_impact, overdose_impact, social_distance):
     fig.savefig(full_filename)
     return full_filename
 
-def calculate_medical_impact(locations, avg_space, hours, social_distance, covid_or_overdose, norm=500):
+def calculate_medical_impact(locations, avg_space, hours, masks, nasal, covid_or_overdose, norm=500):
     impact_projection = []
-    A = social_distance
+     
+    if nasal == '7':
+        S=7
+    elif masks == '1':
+        S=1
+    else: 
+        S=2
+   # S=social_distance
     space = locations*avg_space
-    for S in range(1,29):
-        infected =0.001*60*(A-S)
+    for A in range(1,29):
+        infected =0.001*60*(S-A)
         critical_covid = 0.25*infected
         mild_covid = 0.75*infected
-        overdose = norm - (hours/3)*(space/S)
+        overdose = norm - (hours/3)*(space/A)
         overdose = overdose*0.3
         if covid_or_overdose == 'overdose':
             impact_projection.append(int(2*overdose))
