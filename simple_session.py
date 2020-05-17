@@ -49,10 +49,16 @@ def all():
     if request.method == 'POST':
         if request.form['submit'] == 'Calculate impact':
             num1 = [0,0,0,0,0,0]
+            """
+            Add new items here and in all.html to have new user inputs
+            """
             num1[0] = request.form['add_num1']
             num1[1] = request.form['add_num2']
             num1[2] = request.form['add_num3']
             num1[3] = request.form['add_num4']
+            num1[4] = request.form['add_num5']
+            social_distance_menu = request.form['drop_down1']
+            print(social_distance_menu)
             num1 = [float(i) for i in num1]
             if num1[0] > 100 or num1[0] < 1:
                 num1[0] = 1
@@ -65,8 +71,8 @@ def all():
             social_distance = []
             for i in range(28):
                 social_distance.append(i)
-            overdose_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'overdose')
-            covid_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'covid')
+            overdose_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'overdose',num1[4])
+            covid_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'covid',num1[4])
             generate_image(covid_impact,overdose_impact,social_distance)
 
     r = make_response(render_template("all.html",
@@ -101,11 +107,10 @@ def generate_image(covid_impact, overdose_impact, social_distance):
     fig.savefig(full_filename)
     return full_filename
 
-def calculate_medical_impact(locations, avg_space, hours, social_distance, covid_or_overdose):
+def calculate_medical_impact(locations, avg_space, hours, social_distance, covid_or_overdose, norm=500):
     impact_projection = []
     A = social_distance
     space = locations*avg_space
-    norm = 500
     for S in range(1,29):
         infected =0.001*60*(A-S)
         critical_covid = 0.25*infected
