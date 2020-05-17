@@ -28,12 +28,7 @@ def index():
 def home():
     referrer = request.headers.get("Referer")
     remote_ip = request.remote_addr
-    if "127.0.0.1" in remote_ip:
-        html_var = f"{remote_ip}, welcome home!"
-    elif "192.168" in remote_ip:
-        html_var = f"{remote_ip}, hello neighbour!"
-    else:
-        html_var = f"{remote_ip}"
+    html_var = f"{remote_ip}"
     return render_template("index.html", content="Your IP is: {}".format(html_var))
 
 
@@ -43,13 +38,30 @@ def local():
     return render_template("local.html",
                            location=f"{remote_ip}")
 
-@app.route("/all", methods=["GET"])
+@app.route("/all", methods=["GET","POST"])
 def all():
     remote_ip = request.remote_addr
     if request.method == 'GET':
         image_location = generate_image()
+
+    add = ""
+    if request.method == 'POST':
+        if request.form['submit'] == 'submit_add':
+            num1 = [0,0,0,0,0,0]
+            num1[0] = request.form['add_num1']
+            num1[1] = request.form['add_num2']
+            num1[2] = request.form['add_num3']
+            num1[3] = request.form['add_num4']
+            num1[4] = request.form['add_num5']
+            num1[5] = request.form['add_num6']
+            num1 = [ int(x) for x in num1]
+            num2 = [element * 2 for element in num1]
+            add = sum(num1)
+            image_location = generate_image(num1,num2)
+
     r = make_response(render_template("all.html",
-                           location=f"{remote_ip}"))
+                           location=f"{remote_ip}",
+                           add = add))
     r.headers.set("Cache-Control 'no-cache, no-store'", "Pragma 'no-cache'")
     return r
 
