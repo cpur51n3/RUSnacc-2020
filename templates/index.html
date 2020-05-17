@@ -5,29 +5,45 @@
 
 <head>
 <link rel="stylesheet" type="text/css" href="static/main.css" src="{{url_for('static', filename='main.css')}}">
-</head>
-				<body>
+</head>	
+<STYLE type="text/css">
+<HTML>	
+<body>
+		UL{
+				margin: 12px 12px 12px 12px;
+				padding: 3px 3px 3px 3px;
+			}	
+		LI { 
+			  color: black;                /* text color is white */ 
+			  background: whitesmoke;            /* Content, padding will be blue */
+			  margin: 12px 12px 12px 12px;
+			  padding: 12px 0px 12px 12px; /* Note 0px padding right */
+			  list-style: none             /* no glyphs before a list item */
+										   /* No borders set */
+			}
+			LI.withborder {
+			  border-style: dashed;
+			  border-width: medium;        /* sets border width on all sides */
+			  border-color: black;
+			}
+		</STYLE>
+		</HEAD>
 					<center>
 				<!-- Header -->
-					<header id="header">
-						<h1><a><strong>{{content}}</strong></a></h1>
-					</header>
-
-				<!-- Main -->
+				<UL>
+						<LI>		<!-- Main -->
 						<article class="thumb">
 							<a href="static/01.jpg" class="image"><img src="{{url_for('static', filename='01.jpg')}}" alt="" /></a>
-							<h2>Distributed Computing Protocal: Start a new job for calculate optimal projection</h2>
+							<h2>Emergency Planner </h2>
+							<UL>This app is intended to help those who are struggling with addiction during the COVID-19 pandemic.  <p>
+								<p>Its intent is to help safe consumption sites determine what the optimal population they should allow to create the least strain on the healthcare system</p>	
 						</article>
-						<article class="thumb">
-							<a href="static/02.jpg" class="image"><img src="{{url_for('static', filename='02.jpg')}}" alt="" /></a>
-							<h2>Distributed Computing Protocol: Start node(s) for other people to distribute computing to</h2>
-							<p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-						</article>
-						<article class="thumb">
-							<a href="static/03.jpg" class="image"><img src="{{url_for('static', filename='03.jpg')}}" alt="" /></a>
-							<h2>Sed consequat phasellus</h2>
-							<p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p>
-						</article>
+					</LI>
+				</UL>			
+						
 				</center>
 	</body>
+	<HTML>
+
+
 {% endblock %}
