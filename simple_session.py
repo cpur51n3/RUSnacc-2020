@@ -26,10 +26,7 @@ def index():
 
 @app.route("/home")
 def home():
-    referrer = request.headers.get("Referer")
-    remote_ip = request.remote_addr
-    html_var = f"{remote_ip}"
-    return render_template("index.html", content="Your IP is: {}".format(html_var))
+    return render_template("index.html", content="{}".format(datetime.datetime.now()))
 
 
 @app.route("/local")
@@ -50,13 +47,21 @@ def all():
         generate_image(covid_impact,overdose_impact,social_distance)
 
     if request.method == 'POST':
-        if request.form['submit'] == 'submit_add':
+        if request.form['submit'] == 'Calculate impact':
             num1 = [0,0,0,0,0,0]
             num1[0] = request.form['add_num1']
             num1[1] = request.form['add_num2']
             num1[2] = request.form['add_num3']
             num1[3] = request.form['add_num4']
             num1 = [float(i) for i in num1]
+            if num1[0] > 100 or num1[0] < 1:
+                num1[0] = 1
+            if num1[1] > 1000000 or num1[1] < 0:
+                num1[1] = 200
+            if num1[2] > 24 or num1[2] < 0:
+                num1[2] = 12
+            if num1[3] > 7 or num1[3] < 1:
+                num1[3] = 2.44
             social_distance = []
             for i in range(28):
                 social_distance.append(i)
