@@ -106,11 +106,11 @@ def calculate_medical_impact(locations, avg_space, hours, social_distance, covid
     A = social_distance
     space = locations*avg_space
     norm = 500
-    for S in range(28):
+    for S in range(1,29):
         infected =0.001*60*(A-S)
         critical_covid = 0.25*infected
         mild_covid = 0.75*infected
-        overdose = norm - (hours/3)*(space/A)
+        overdose = norm - (hours/3)*(space/S)
         overdose = overdose*0.3
         if covid_or_overdose == 'overdose':
             impact_projection.append(int(2*overdose))
