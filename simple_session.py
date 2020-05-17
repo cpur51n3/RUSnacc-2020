@@ -42,9 +42,13 @@ def local():
 def all():
     remote_ip = request.remote_addr
     if request.method == 'GET':
-        image_location = generate_image()
+        social_distance = []
+        for i in range(28):
+            social_distance.append(i)
+        overdose_impact = calculate_medical_impact(1,200,18, 2.4,'overdose')
+        covid_impact = calculate_medical_impact(1,200,18, 2.4,'covid')
+        generate_image(covid_impact,overdose_impact,social_distance)
 
-    add = ""
     if request.method == 'POST':
         if request.form['submit'] == 'submit_add':
             num1 = [0,0,0,0,0,0]
@@ -52,25 +56,21 @@ def all():
             num1[1] = request.form['add_num2']
             num1[2] = request.form['add_num3']
             num1[3] = request.form['add_num4']
-            num1[4] = request.form['add_num5']
-            num1[5] = request.form['add_num6']
-            num1 = [ int(x) for x in num1]
-            num2 = [element * 2 for element in num1]
-            add = sum(num1)
-            image_location = generate_image(num1,num2)
+            num1 = [float(i) for i in num1]
+            social_distance = []
+            for i in range(28):
+                social_distance.append(i)
+            overdose_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'overdose')
+            covid_impact = calculate_medical_impact(num1[0],num1[1],num1[2],num1[3],'covid')
+            generate_image(covid_impact,overdose_impact,social_distance)
 
     r = make_response(render_template("all.html",
-                           location=f"{remote_ip}",
-                           add = add))
+                           location=f"{remote_ip}"))
     r.headers.set("Cache-Control 'no-cache, no-store'", "Pragma 'no-cache'")
     return r
 
 @app.after_request
 def add_header(response):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'no-cache, no-store'
     response.headers['Pragma'] = 'no-cache'
@@ -84,15 +84,34 @@ def add_header(response):
 #                            which_action=page_strings['worker_action'],
 #                            which_action_desc=page_strings['worker_action_desc'])
 
-def generate_image():
+def generate_image(covid_impact, overdose_impact, social_distance):
     df = pd.DataFrame({
-                        'a': [20, 18, 11, 615, 113],
-                        'b': [4, 25, 11, 602, 123]
-                        }, index=[1990, 1997, 2003, 2009, 2014])
+                        'covid_impact': covid_impact,
+                        'overdose_impact': overdose_impact,
+                        }, index=social_distance)
     lines = df.plot.line()
+    lines.set_xlabel("Social distance (every 1/4 meter)")
+    lines.set_ylabel("Medical service impact (1 unit/day of treatment)")
     fig = lines.get_figure()
     fig.savefig(full_filename)
     return full_filename
+
+def calculate_medical_impact(locations, avg_space, hours, social_distance, covid_or_overdose):
+    impact_projection = []
+    A = social_distance
+    space = locations*avg_space
+    norm = 500
+    for S in range(28):
+        infected =0.001*60*(A-S)
+        critical_covid = 0.25*infected
+        mild_covid = 0.75*infected
+        overdose = norm - (hours/3)*(space/A)
+        overdose = overdose*0.3
+        if covid_or_overdose == 'overdose':
+            impact_projection.append(int(2*overdose))
+        elif covid_or_overdose == 'covid':
+            impact_projection.append(int(14*mild_covid + 35*critical_covid))
+    return impact_projection
 
 if __name__ == "__main__":
     app.run(debug=True)
